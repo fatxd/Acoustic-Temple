@@ -2910,6 +2910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   objetivo: {fileID: 1758256124}
   offset: {x: 0, y: 4, z: -6}
+  suavizado: 5
 --- !u!114 &1989430687
 MonoBehaviour:
   m_ObjectHideFlags: 0
