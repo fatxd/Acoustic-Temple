@@ -1,0 +1,107 @@
+<REAPER_PROJECT 0.1 "7.0/x64" 0
+ RIPPLE 0
+ AUTOXFADE 1
+ PANLAW 1
+ PROJOFFS 0 0 0
+ TIMEMODE 1 5 -1 30 0 0 -1
+ CURSOR 0
+ LOOP 0
+ TEMPO 120 4 4
+ SAMPLERATE 48000 1 0
+ <TRACK {1dc2ccd1-38d3-5a46-a80b-6ba6d768d8ff}
+  NAME "01 Pierde vida - golpe"
+  VOLPAN 1 0 -1 -1 1
+  MUTESOLO 0 0 0
+  <ITEM
+   POSITION 0.000
+   LENGTH 0.500000
+   LOOP 0
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {ac40a95f-fa66-596c-82ee-634d0c46903f}
+   NAME "01_Pierde_vida.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/GameSFX/01_Pierde_vida.wav"
+   >
+  >
+ >
+ <TRACK {bdf22bd6-4490-595c-9527-b697b7f8fa4f}
+  NAME "02 Respuesta correcta - campanita"
+  VOLPAN 1 0 -1 -1 1
+  MUTESOLO 0 0 0
+  <ITEM
+   POSITION 1.500
+   LENGTH 1.080000
+   LOOP 0
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {d906c126-571c-5af8-8cfa-132018be3b79}
+   NAME "02_Respuesta_correcta.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/GameSFX/02_Respuesta_correcta.wav"
+   >
+  >
+ >
+ <TRACK {8cef9cf0-2127-5fed-8cad-415fef090604}
+  NAME "03 Derrota - golpe extendido"
+  VOLPAN 1 0 -1 -1 1
+  MUTESOLO 0 0 0
+  <ITEM
+   POSITION 3.500
+   LENGTH 2.050000
+   LOOP 0
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {aefd6f3b-500d-547f-a90b-f8a007a66111}
+   NAME "03_Derrota.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/GameSFX/03_Derrota.wav"
+   >
+  >
+ >
+ <TRACK {58f6eb3f-5bc1-53ec-8204-c46a247b35aa}
+  NAME "04 Victoria - trompetas"
+  VOLPAN 1 0 -1 -1 1
+  MUTESOLO 0 0 0
+  <ITEM
+   POSITION 6.500
+   LENGTH 2.850000
+   LOOP 0
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {ea752778-abfa-5e21-aa14-32483d0723b3}
+   NAME "04_Victoria_trompetas.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/GameSFX/04_Victoria_trompetas.wav"
+   >
+  >
+ >
+>

@@ -72,6 +72,16 @@ ExportedObj/
 *.pdb.meta
 *.mdb.meta
 
+# REAPER waveform caches are generated locally and are not Unity assets.
+*.reapeaks
+*.reapeaks.meta
+/Assets/Resources/AdaptiveMusic/peaks.meta
+*.RPP-bak
+
+# Python generator cache.
+__pycache__/
+*.pyc
+
 # Unity3D generated file on crash reports
 sysinfo.txt
 
