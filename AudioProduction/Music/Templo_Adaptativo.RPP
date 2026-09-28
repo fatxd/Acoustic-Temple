@@ -1,0 +1,254 @@
+<REAPER_PROJECT 0.1 "7.0/x64" 0
+ RIPPLE 0
+ AUTOXFADE 1
+ PANLAW 1
+ PROJOFFS 0 0 0
+ MAXPROJLEN 0 600
+ TIMEMODE 1 5 -1 30 0 0 -1
+ CURSOR 0
+ LOOP 0
+ TEMPO 96 4 4
+ <TRACK {ead19016-0f84-595e-8423-94f7adae84ab}
+  NAME "01 Base - drone D frigio"
+  VOLPAN 0.72 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 0
+   LENGTH 20.000000000
+   LOOP 1
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {8041a618-6aef-523c-8f0f-45ce3f668ba1}
+   NAME "01_drone.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/01_drone.wav"
+   >
+  >
+ >
+ <TRACK {ada96768-4f62-5787-9cc3-8724fba784c2}
+  NAME "02 Base - armonía oscura"
+  VOLPAN 0.72 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 0
+   LENGTH 20.000000000
+   LOOP 1
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {650bd9b7-db2a-5384-9913-876d2470b16d}
+   NAME "02_pad.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/02_pad.wav"
+   >
+  >
+ >
+ <TRACK {1fbaab6d-3037-58c4-8560-4fabb1ad5af5}
+  NAME "03 Base - campanas discretas"
+  VOLPAN 0.72 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 0
+   LENGTH 20.000000000
+   LOOP 1
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {fc574553-ac97-54e4-930a-423313cac4b0}
+   NAME "03_bells.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/03_bells.wav"
+   >
+  >
+ >
+ <TRACK {8e90fd8a-1e0f-5ce2-b71b-5d6bb0dc8bc3}
+  NAME "04 Nivel 1 - tambor pesado"
+  VOLPAN 0.8 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 0
+   LENGTH 20.000000000
+   LOOP 1
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {d78607e3-3f4e-5a9a-9da7-7f0c0ba8016c}
+   NAME "04_slow_drums.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/04_slow_drums.wav"
+   >
+  >
+ >
+ <TRACK {bd8ec9c8-7a82-58b4-8c26-e76b7a48f0cf}
+  NAME "05 Nivel 2 - pulso en corcheas"
+  VOLPAN 0.8 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 0
+   LENGTH 20.000000000
+   LOOP 1
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {ac6bba45-3cdd-5beb-b307-3f02e4cda59b}
+   NAME "05_eighth_pulse.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/05_eighth_pulse.wav"
+   >
+  >
+ >
+ <TRACK {aa21f543-2b93-5601-9010-06ae857521ad}
+  NAME "06 Nivel 3 - percusión urgente"
+  VOLPAN 0.8 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 0
+   LENGTH 20.000000000
+   LOOP 1
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {45c60f30-b955-53ef-ac56-a4529f7fd6dd}
+   NAME "06_fast_percussion.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/06_fast_percussion.wav"
+   >
+  >
+ >
+ <TRACK {967c6bfb-17e3-5f18-84ae-0fd07a410f6c}
+  NAME "07 Peligro - vidas y tiempo"
+  VOLPAN 0.8 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 0
+   LENGTH 20.000000000
+   LOOP 1
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {9c83b0c6-0d82-51c5-ae37-300acfaededc}
+   NAME "07_danger_texture.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/07_danger_texture.wav"
+   >
+  >
+ >
+ <TRACK {0375dac7-8462-58d3-baf9-60cb7249a9a4}
+  NAME "08 Señal - vida perdida"
+  VOLPAN 0.8 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 21
+   LENGTH 1.350000000
+   LOOP 0
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {79333bd6-0f95-57b0-a194-55c74c6ace86}
+   NAME "08_life_lost.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/08_life_lost.wav"
+   >
+  >
+ >
+ <TRACK {1c074679-cdb3-5859-be8b-6af08a021e65}
+  NAME "09 Señal - pregunta superada"
+  VOLPAN 0.8 0 -1 -1 1
+  MUTESOLO 0 0 0
+  IPHASE 0
+  PLAYOFFS 0 1
+  ISBUS 0 0
+  <ITEM
+   POSITION 23
+   LENGTH 1.050000000
+   LOOP 0
+   ALLTAKES 0
+   FADEIN 1 0 0 1 0 0 0
+   FADEOUT 1 0 0 1 0 0 0
+   MUTE 0 0
+   SEL 0
+   IGUID {fec550a6-0a84-5ae2-b7cf-da047dd9ae45}
+   NAME "09_question_passed.wav"
+   VOLPAN 1 0 1 -1
+   SOFFS 0
+   PLAYRATE 1 1 0 -1 0 0.0025
+   CHANMODE 0
+   <SOURCE WAVE
+    FILE "../../Assets/Resources/AdaptiveMusic/09_question_passed.wav"
+   >
+  >
+ >
+>

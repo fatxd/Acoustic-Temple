@@ -6,9 +6,34 @@ public class PlayerMovement : MonoBehaviour
     public float velocidad = 5f;
     public float gravedad = -9.81f;
 
+    private bool automaticMode;
+    private Vector2 automaticInput;
+
     private CharacterController controller;
     private Animator animator;
     private float velocidadVertical;
+
+    public void EnableAutomaticMode()
+    {
+        automaticMode = true;
+        automaticInput = Vector2.zero;
+    }
+
+    public void SetAutomaticInput(Vector2 input)
+    {
+        automaticInput = Vector2.ClampMagnitude(input, 1f);
+    }
+
+    public void Teleport(Vector3 position)
+    {
+        if (controller == null) controller = GetComponent<CharacterController>();
+        bool wasEnabled = controller.enabled;
+        controller.enabled = false;
+        transform.position = position;
+        controller.enabled = wasEnabled;
+        velocidadVertical = 0f;
+        automaticInput = Vector2.zero;
+    }
 
     void Start()
     {
@@ -18,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Vector2 input = Keyboard.current != null
+        Vector2 input = automaticMode ? automaticInput : Keyboard.current != null
             ? new Vector2(
                 (Keyboard.current.dKey.isPressed ? 1 : 0) -
                 (Keyboard.current.aKey.isPressed ? 1 : 0),
@@ -36,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         // Animación
         if (animator != null)
         {
-            animator.SetFloat("Speed", movimiento.magnitude);
+            animator.SetFloat("Speed", automaticMode && input.y < 0f ? 0f : movimiento.magnitude);
         }
 
         // Gravedad
@@ -53,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(movimientoFinal * Time.deltaTime);
 
         // Girar hacia donde se mueve
-        if (movimiento != Vector3.zero)
+        if (movimiento != Vector3.zero && !(automaticMode && input.y < 0f))
         {
             transform.forward = movimiento;
         }
