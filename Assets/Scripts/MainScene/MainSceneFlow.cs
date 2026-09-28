@@ -23,6 +23,11 @@ public sealed class MainSceneFlow : MonoBehaviour
     [SerializeField, Range(0.5f, 1f)]
     private float finalSpeedMultiplier = 0.84f;
 
+    // Nombre del estado de derrota en GameState.
+    // Si tu enum usa otro nombre, podés cambiarlo desde el Inspector.
+    [SerializeField]
+    private string defeatStateName = "GameOver";
+
     private DoorState[] doors;
 
     private bool traversing;
@@ -413,7 +418,7 @@ public sealed class MainSceneFlow : MonoBehaviour
             return;
         }
 
-        // Retroceso después de una respuesta incorrecta
+        // Retroceso después de respuesta incorrecta
         if (knockbackTimeLeft > 0f)
         {
             knockbackTimeLeft =
@@ -436,22 +441,18 @@ public sealed class MainSceneFlow : MonoBehaviour
             return;
         }
 
-        // Esperar mientras responde o habla el TTS
+        // Esperar respuesta o TTS
         if (waitingForAnswer ||
             ttsManager.IsSpeaking)
         {
-            player.SetAutomaticInput(
-                Vector2.zero
-            );
-
+            player.SetAutomaticInput(Vector2.zero);
             return;
         }
 
-        // Detectar puertas
+        // Detectar próxima pregunta
         if (nextDoor < questionTriggers.Length &&
             player.transform.position.z >=
-            questionTriggers[nextDoor]
-                .transform.position.z)
+            questionTriggers[nextDoor].transform.position.z)
         {
             EnterDoorTrigger(nextDoor);
             return;
@@ -477,7 +478,7 @@ public sealed class MainSceneFlow : MonoBehaviour
     }
 
     // =========================================================
-    // PREGUNTAS
+    // TRIGGER DE PREGUNTA
     // =========================================================
 
     public void EnterDoorTrigger(int index)
@@ -493,15 +494,12 @@ public sealed class MainSceneFlow : MonoBehaviour
 
         waitingForAnswer = true;
 
-        player.SetAutomaticInput(
-            Vector2.zero
-        );
+        player.SetAutomaticInput(Vector2.zero);
 
         questionManager.BeginQuestionAtDoor(index);
 
         Debug.Log(
-            $"[MAIN] Trigger puerta {index + 1}: " +
-            "empieza la pregunta.",
+            $"[MAIN] Trigger puerta {index + 1}: empieza la pregunta.",
             this
         );
     }
@@ -523,17 +521,10 @@ public sealed class MainSceneFlow : MonoBehaviour
         goalReached = true;
         traversing = false;
 
-        player.SetAutomaticInput(
-            Vector2.zero
-        );
+        player.SetAutomaticInput(Vector2.zero);
 
-        // ==========================================
-        // ANIMACIÓN DE VICTORIA
-        // ==========================================
-
+        // Animación de victoria
         player.PlayBuff();
-
-        // ==========================================
 
         questionManager.ReachGoal();
 
@@ -552,14 +543,10 @@ public sealed class MainSceneFlow : MonoBehaviour
         if (index != nextDoor)
             return;
 
-        // ==========================================
-        // ANIMACIÓN DE RESPUESTA CORRECTA
-        // ==========================================
-
+        // Animación correcta
         player.PlayJump();
 
-        // ==========================================
-
+        // Abrir puerta
         OpenDoor(index);
 
         nextDoor++;
@@ -568,8 +555,7 @@ public sealed class MainSceneFlow : MonoBehaviour
         knockbackTimeLeft = 0f;
 
         Debug.Log(
-            $"[MAIN] Puerta {index + 1} abierta. " +
-            "Animación Jump.",
+            $"[MAIN] Puerta {index + 1} abierta. Animación Jump.",
             this
         );
     }
@@ -667,55 +653,57 @@ public sealed class MainSceneFlow : MonoBehaviour
         if (index != nextDoor)
             return;
 
-        // Animación de error
+        // Animación incorrecta
         player.PlayRollBackward();
 
-        // Retroceso real del CharacterController
+        // Retroceso real
         knockbackTimeLeft =
             knockbackSeconds;
 
         Debug.Log(
-            $"[MAIN] Puerta {index + 1}: " +
-            "RollBackward por respuesta incorrecta.",
+            $"[MAIN] Puerta {index + 1}: RollBackward por error.",
             this
         );
     }
 
     // =========================================================
-    // ESTADOS DEL JUEGO
+    // CAMBIOS DE ESTADO
     // =========================================================
 
     private void OnGameStateChanged(GameState state)
     {
+        // Si está jugando normalmente,
+        // no hacemos nada.
         if (state == GameState.Playing)
+        {
             return;
+        }
 
-        player.SetAutomaticInput(
-            Vector2.zero
-        );
+        // Pausa, menú, victoria, derrota, etc.
+        // Detenemos el movimiento automático.
+        player.SetAutomaticInput(Vector2.zero);
 
-        /*
-         * Si el jugador llegó a la meta,
-         * Buff ya fue ejecutado en EnterGoalTrigger().
-         *
-         * Si NO llegó a la meta y deja el estado Playing
-         * durante el recorrido, interpretamos que perdió.
-         */
+        // IMPORTANTE:
+        // Solo ejecutar Death cuando el estado sea
+        // realmente el estado de derrota.
+        //
+        // No se ejecuta con Pause.
+        // No se ejecuta con Victory.
+        // No se ejecuta al volver al juego.
 
-        if (!goalReached && traversing)
+        if (state.ToString() == defeatStateName)
         {
             player.PlayDeath();
 
             Debug.Log(
-                "[MAIN] Partida perdida: " +
-                "animación Death.",
+                "[MAIN] Partida perdida: animación Death.",
                 this
             );
         }
     }
 
     // =========================================================
-    // DESTRUIR / DESCONECTAR EVENTOS
+    // LIMPIEZA
     // =========================================================
 
     private void OnDestroy()
@@ -737,9 +725,7 @@ public sealed class MainSceneFlow : MonoBehaviour
 
         if (player != null)
         {
-            player.SetAutomaticInput(
-                Vector2.zero
-            );
+            player.SetAutomaticInput(Vector2.zero);
         }
     }
 }
