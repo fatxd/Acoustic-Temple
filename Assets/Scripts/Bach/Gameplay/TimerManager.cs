@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class TimerManager : MonoBehaviour
@@ -10,7 +11,9 @@ public class TimerManager : MonoBehaviour
     [SerializeField] private AudioSource warningAudioSource;
     [SerializeField] private AudioClip warningClip;
     [SerializeField] private GameSfxManager gameSfxManager;
+    [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField, Min(0f)] private float currentTime;
+    
 
     private bool timerActive;
     private bool warnedAt30;
@@ -27,6 +30,9 @@ public class TimerManager : MonoBehaviour
         {
             gameSfxManager = GetComponent<GameSfxManager>();
         }
+
+        timerText.color = new Color(0.83f, 0.69f, 0.22f);
+        timerText.transform.localScale = Vector3.one;
     }
 
     public void StartTimer()
@@ -69,17 +75,26 @@ public class TimerManager : MonoBehaviour
             return;
         }
 
+        int minutes = Mathf.FloorToInt(currentTime / 60f);
+        int seconds = Mathf.FloorToInt(currentTime % 60f);
+ 
+        timerText.text = $"{minutes:00}:{seconds:00}";
+
         float previousTime = currentTime;
         currentTime = Mathf.Max(0f, currentTime - Time.deltaTime);
 
         if (!warnedAt30 && previousTime > 30f && currentTime <= 30f)
         {
+            timerText.color = new Color(1f, 0.65f, 0f);
             warnedAt30 = true;
             PlayWarning();
         }
 
         if (!warnedAt10 && previousTime > 10f && currentTime <= 10f)
         {
+            timerText.color = Color.red;
+            float scale = 1f + Mathf.Sin(Time.time * 8f) * 0.15f;
+            timerText.transform.localScale = Vector3.one * scale;
             warnedAt10 = true;
             PlayWarning();
         }
