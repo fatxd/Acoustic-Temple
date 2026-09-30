@@ -14,6 +14,7 @@ public class QuestionManager : MonoBehaviour
         public string option4;
         [Range(1, 4)] public int correctOption = 1;
     }
+    [SerializeField] private QuestionUI questionUI;
 
     [SerializeField] private TTSManager ttsManager;
     [SerializeField] private LivesManager livesManager;
@@ -187,6 +188,11 @@ public class QuestionManager : MonoBehaviour
         if (adaptiveMusicManager != null) adaptiveMusicManager.ReportCorrectAnswer();
         if (gameSfxManager != null) gameSfxManager.PlayCorrectAnswer();
 
+        if (questionUI != null)
+        {
+            questionUI.ShowFeedback("¡Respuesta Correcta!", true);
+        }
+
         int completedQuestionIndex = currentQuestionIndex;
         currentQuestionIndex++;
         if (doorMode)
@@ -215,6 +221,11 @@ public class QuestionManager : MonoBehaviour
         livesManager.LoseLife();
         if (adaptiveMusicManager != null)
             adaptiveMusicManager.ReportLifeLost(livesManager.CurrentLives);
+
+        if (questionUI != null)
+        {
+            questionUI.ShowFeedback("Respuesta Incorrecta", false);
+        }
 
         if (livesManager.CurrentLives == 0)
         {
@@ -250,11 +261,20 @@ public class QuestionManager : MonoBehaviour
         acceptingAnswer = false;
         waitingForGoal = false;
         currentDoorPrompted = false;
+
+        if (questionUI != null)
+            questionUI.HideUI();
     }
 
     private void ReadCurrentQuestion(string introduction)
     {
         QuestionData question = questions[currentQuestionIndex];
+
+        if (questionUI != null)
+        {
+            questionUI.DisplayQuestion(question, currentQuestionIndex);
+        }
+
         SpeakOptions(introduction + $"Pregunta {currentQuestionIndex + 1}. {question.text} ", question);
     }
 

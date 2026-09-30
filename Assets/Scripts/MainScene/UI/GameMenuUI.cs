@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>Connects the editable Main Scene panels to the game menu actions.</summary>
 public sealed class GameMenuUI : MonoBehaviour
@@ -27,14 +28,20 @@ public sealed class GameMenuUI : MonoBehaviour
 
     [Header("Volume menu")]
     [SerializeField] private Slider volumeSlider;
-    [SerializeField] private Text volumeValue;
-    [SerializeField] private Text volumeSubtitle;
+    [SerializeField] private TextMeshProUGUI volumeValue;
+    [SerializeField] private TextMeshProUGUI volumeSubtitle;
     [SerializeField] private Button volumeLessButton;
     [SerializeField] private Button volumeMoreButton;
     [SerializeField] private Button volumeBackButton;
 
     [Header("Result and HUD")]
-    [SerializeField] private Text resultTitle;
+
+    [SerializeField] private Image resultImage;
+
+    [SerializeField] private Sprite victorySprite;
+
+    [SerializeField] private Sprite gameOverSprite;
+    [SerializeField] private TextMeshProUGUI resultTitle;
     [SerializeField] private Button resultReturnButton;
     [SerializeField] private Button resultExitButton;
     [SerializeField] private Button pauseButton;
@@ -51,7 +58,7 @@ public sealed class GameMenuUI : MonoBehaviour
             || volumeSlider == null || volumeValue == null || volumeSubtitle == null
             || volumeLessButton == null || volumeMoreButton == null || volumeBackButton == null
             || resultTitle == null || resultReturnButton == null || resultExitButton == null
-            || pauseButton == null)
+            || pauseButton == null || resultImage == null || victorySprite == null || gameOverSprite == null)
         {
             Debug.LogError("[UI] Faltan referencias en los paneles de Main Scene.", this);
             enabled = false;
@@ -115,6 +122,9 @@ public sealed class GameMenuUI : MonoBehaviour
             resultTitle.text = state == GameState.Victory
                 ? "¡TEMPLO COMPLETADO!" : "FIN DE LA PARTIDA";
 
+        if (state == GameState.Victory || state == GameState.GameOver)
+            resultImage.sprite = state == GameState.Victory 
+                ? victorySprite : gameOverSprite;     
         shownState = state;
     }
 
