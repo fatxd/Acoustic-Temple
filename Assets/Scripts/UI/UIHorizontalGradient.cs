@@ -9,41 +9,25 @@ public class UIHorizontalGradient : BaseMeshEffect
 
     public override void ModifyMesh(VertexHelper vh)
     {
-        if (!IsActive()) return;
+        if (!IsActive() || vh.currentVertCount == 0) return;
 
         UIVertex vertex = new UIVertex();
+        float minimum = float.MaxValue;
+        float maximum = float.MinValue;
         for (int i = 0; i < vh.currentVertCount; i++)
         {
             vh.PopulateUIVertex(ref vertex, i);
-            // Aplica el color según la posición horizontal (X)
-            vertex.color = Color.Lerp(leftColor, rightColor, (vertex.position.x - GetMinX(vh)) / GetWidth(vh));
+            minimum = Mathf.Min(minimum, vertex.position.x);
+            maximum = Mathf.Max(maximum, vertex.position.x);
+        }
+
+        float span = maximum - minimum;
+        for (int i = 0; i < vh.currentVertCount; i++)
+        {
+            vh.PopulateUIVertex(ref vertex, i);
+            float t = span > Mathf.Epsilon ? (vertex.position.x - minimum) / span : 0f;
+            vertex.color = Color.Lerp(leftColor, rightColor, t);
             vh.SetUIVertex(vertex, i);
         }
-    }
-
-    private float GetMinX(VertexHelper vh)
-    {
-        UIVertex vertex = new UIVertex();
-        float minX = float.MaxValue;
-        for (int i = 0; i < vh.currentVertCount; i++)
-        {
-            vh.PopulateUIVertex(ref vertex, i);
-            if (vertex.position.x < minX) minX = vertex.position.x;
-        }
-        return minX;
-    }
-
-    private float GetWidth(VertexHelper vh)
-    {
-        UIVertex vertex = new UIVertex();
-        float minX = float.MaxValue;
-        float maxX = float.MinValue;
-        for (int i = 0; i < vh.currentVertCount; i++)
-        {
-            vh.PopulateUIVertex(ref vertex, i);
-            if (vertex.position.x < minX) minX = vertex.position.x;
-            if (vertex.position.x > maxX) maxX = vertex.position.x;
-        }
-        return maxX - minX;
     }
 }

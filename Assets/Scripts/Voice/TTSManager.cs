@@ -11,6 +11,7 @@ public class TTSManager : MonoBehaviour
     private string spanishLanguageId;
     private bool voiceLookupComplete;
     private bool speaking;
+    private bool blocksTraversal = true;
     private bool nativeSpeechObserved;
     private float minimumSpeechEndAt;
     private float fallbackSpeechEndAt;
@@ -61,6 +62,8 @@ public class TTSManager : MonoBehaviour
             return speaking;
         }
     }
+
+    public bool IsBlockingTraversal => IsSpeaking && blocksTraversal;
 
     private void RefreshSpeakingState()
     {
@@ -120,7 +123,7 @@ public class TTSManager : MonoBehaviour
 #endif
     }
 
-    public void Speak(string text)
+    public void Speak(string text, bool blocksTraversal = true)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
@@ -149,6 +152,7 @@ public class TTSManager : MonoBehaviour
         }
 
         statusBuffer.EnsureCapacity((int)requiredCapacity);
+        this.blocksTraversal = blocksTraversal;
         WindowsVoice.speak(speechText);
         float now = Time.realtimeSinceStartup;
         float estimatedSeconds = EstimateSpeechSeconds(text);

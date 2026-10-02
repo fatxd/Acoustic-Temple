@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,15 +26,6 @@ public class QuestionManager : MonoBehaviour
     {
         new QuestionData
         {
-            text = "¿Cuál es el planeta más cercano al Sol?",
-            option1 = "Venus",
-            option2 = "Mercurio",
-            option3 = "Marte",
-            option4 = "Tierra",
-            correctOption = 2
-        },
-        new QuestionData
-        {
             text = "¿Cuántos días tiene una semana?",
             option1 = "Cinco",
             option2 = "Seis",
@@ -43,12 +35,21 @@ public class QuestionManager : MonoBehaviour
         },
         new QuestionData
         {
-            text = "¿Qué animal maúlla?",
-            option1 = "Gato",
-            option2 = "Perro",
-            option3 = "Vaca",
-            option4 = "Caballo",
-            correctOption = 1
+            text = "¿Cuál es el planeta más cercano al Sol?",
+            option1 = "Venus",
+            option2 = "Mercurio",
+            option3 = "Marte",
+            option4 = "Tierra",
+            correctOption = 2
+        },
+        new QuestionData
+        {
+            text = "¿Qué elemento químico tiene el símbolo Au?",
+            option1 = "Plata",
+            option2 = "Aluminio",
+            option3 = "Cobre",
+            option4 = "Oro",
+            correctOption = 4
         }
     };
 
@@ -58,6 +59,8 @@ public class QuestionManager : MonoBehaviour
     private bool doorMode;
     private bool waitingForGoal;
     private bool currentDoorPrompted;
+    private Coroutine readingRoutine;
+    private int readingVersion;
 
     public bool IsQuestionActive => questionActive;
     public event Action<int> CorrectAnswerAtDoor;
@@ -257,6 +260,9 @@ public class QuestionManager : MonoBehaviour
 
     public void StopQuestion()
     {
+        readingVersion++;
+        if (readingRoutine != null) StopCoroutine(readingRoutine);
+        readingRoutine = null;
         questionActive = false;
         acceptingAnswer = false;
         waitingForGoal = false;
@@ -280,14 +286,34 @@ public class QuestionManager : MonoBehaviour
 
     private void SpeakOptions(string introduction, QuestionData question)
     {
-        string text = introduction
-            + $"Opción uno, {question.option1}. "
-            + $"Opción dos, {question.option2}. "
-            + $"Opción tres, {question.option3}. "
-            + $"Opción cuatro, {question.option4}. "
-            + "Di uno, dos, tres o cuatro.";
+        if (readingRoutine != null) StopCoroutine(readingRoutine);
+        acceptingAnswer = false;
+        int version = ++readingVersion;
+        readingRoutine = StartCoroutine(ReadOptions(introduction, question, version));
+    }
 
-        ttsManager.Speak(text);
+    private IEnumerator ReadOptions(string introduction, QuestionData question, int version)
+    {
+        string[] segments = {
+            introduction,
+            $"Opción uno, {question.option1}.",
+            $"Opción dos, {question.option2}.",
+            $"Opción tres, {question.option3}.",
+            $"Opción cuatro, {question.option4}.",
+            "Di uno, dos, tres o cuatro."
+        };
+        for (int i = 0; i < segments.Length; i++)
+        {
+            while (gameManager.IsPaused) yield return null;
+            if (version != readingVersion || !questionActive) yield break;
+            if (questionUI != null) questionUI.SetReadingSegment(i - 1);
+            ttsManager.Speak(segments[i]);
+            yield return null;
+            while (ttsManager.IsSpeaking || gameManager.IsPaused) yield return null;
+        }
+        if (version != readingVersion || !questionActive) yield break;
         acceptingAnswer = true;
+        if (questionUI != null) questionUI.FinishReading();
+        readingRoutine = null;
     }
 }
