@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>Owns the transitions between the main menu, round, pause and volume screens.</summary>
-public sealed class BachMenuController : MonoBehaviour
+public sealed class MenuController : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
     [SerializeField] private QuestionManager questionManager;
@@ -15,6 +15,7 @@ public sealed class BachMenuController : MonoBehaviour
 
     public GameManager GameManager => gameManager;
     public VolumeManager VolumeManager => volumeManager;
+    public GameSfxManager SfxManager => sfxManager;
 
     public void AttachLevelFlow(MainSceneFlow flow) => mainSceneFlow = flow;
 
@@ -70,7 +71,7 @@ public sealed class BachMenuController : MonoBehaviour
     {
         if (gameManager.CurrentState != GameState.Playing) return;
         gameManager.ChangeState(GameState.Paused);
-        ttsManager.Speak("Juego en pausa. Di continuar, volver, volumen o salir.");
+        ttsManager.Speak("Juego en pausa. Di continuar, volver, volumen o salir.", false);
     }
 
     public void ResumeRound()
@@ -104,7 +105,7 @@ public sealed class BachMenuController : MonoBehaviour
         else
             return;
 
-        ttsManager.Speak("Di un número del uno al diez para cambiar el volumen. Di volver para regresar.");
+        ttsManager.Speak("Di un número del uno al diez para cambiar el volumen. Di volver para regresar.", false);
     }
 
     public void CloseVolume()
@@ -117,7 +118,7 @@ public sealed class BachMenuController : MonoBehaviour
         else if (gameManager.CurrentState == GameState.PausedVolumeMenu)
         {
             gameManager.ChangeState(GameState.Paused);
-            ttsManager.Speak("Juego en pausa. Di continuar, volver, volumen o salir.");
+            ttsManager.Speak("Juego en pausa. Di continuar, volver, volumen o salir.", false);
         }
     }
 
@@ -127,7 +128,7 @@ public sealed class BachMenuController : MonoBehaviour
             && gameManager.CurrentState != GameState.PausedVolumeMenu) return;
 
         volumeManager.SetVolume(level);
-        ttsManager.Speak($"Volumen {volumeManager.CurrentLevel} de diez.");
+        ttsManager.Speak($"Volumen {volumeManager.CurrentLevel} de diez.", false);
     }
 
     public void SetVolumeFromUI(int level)

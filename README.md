@@ -1,16 +1,18 @@
 # Acoustic Temple
 
-`Assets/Scenes/Main Scene.unity` es la escena de inicio con el nivel 3D y todos los sistemas de juego: menús, preguntas, voz, música y efectos. En la Hierarchy, `Systems` reúne `Core` (estado y menú), `Gameplay` (preguntas, vidas y tiempo), `Voice` (reconocimiento y TTS) y `Audio` (volumen, música y efectos). `Bach.unity` queda guardada como respaldo independiente y no se carga durante la partida. `Veron.unity` conserva el nivel original.
+La [guía del proyecto](Docs/PROJECT_GUIDE.md) reúne responsabilidades del código, reglas de integración y pruebas antes de exportar.
+
+`Assets/Scenes/Main Scene.unity` es la escena de inicio con el nivel 3D y todos los sistemas de juego: menús, preguntas, voz, música y efectos. En la Hierarchy, `Systems` reúne `Core` (estado y menú), `Gameplay` (preguntas, vidas y tiempo), `Voice` (reconocimiento y TTS) y `Audio` (volumen, música y efectos).
 
 ## Código propio
 
 | Carpeta | Responsabilidad |
 | --- | --- |
-| `Assets/Scripts/Bach/Core/` | Estado y transiciones generales de la partida |
-| `Assets/Scripts/Bach/Gameplay/` | Preguntas, vidas y temporizador |
-| `Assets/Scripts/Bach/Audio/` | Música adaptativa, efectos y volumen |
-| `Assets/Scripts/Bach/Voice/` | Comandos de voz, TTS y menús hablados |
-| `Assets/Scripts/Bach/UI/` | Menú principal, pausa y pantalla de volumen |
+| `Assets/Scripts/Core/` | Estado y transiciones generales de la partida |
+| `Assets/Scripts/Gameplay/` | Preguntas, vidas y temporizador |
+| `Assets/Scripts/Audio/` | Música adaptativa, efectos y volumen |
+| `Assets/Scripts/Voice/` | Comandos de voz, TTS y menús hablados |
+| `Assets/Scripts/UI/` | Preguntas, vidas, degradados y parpadeo de antorchas |
 | `Assets/Scripts/MainScene/` | Avance automático, triggers, apertura de puertas y conexión de la UI editable de Main Scene |
 
 Los scripts conservan sus `.meta` y GUID originales, por lo que las referencias de la escena siguen apuntando a los mismos componentes. Los paquetes y assets de terceros permanecen en sus carpetas existentes.
@@ -32,4 +34,4 @@ La UI de `Main Scene` está guardada como objetos editables bajo `UI` en la Hier
 
 ## Prueba rápida
 
-Abrí `Main Scene.unity` en Unity y pulsá **Play**. Iniciá desde **Empezar** o decí «empezar». El personaje debe detenerse ante la primera puerta antes de que hable la pregunta. Contestá «uno», «dos», «tres» o «cuatro» y probá «pausa» durante el recorrido. `Bach.unity` sigue disponible como respaldo, fuera de Build Settings.
+Abrí `Main Scene.unity` en Unity y pulsá **Play**. Iniciá desde **Empezar** o decí «empezar». El personaje debe detenerse ante la primera puerta antes de que hable la pregunta. Contestá «uno», «dos», «tres» o «cuatro» y probá «pausa» durante el recorrido.

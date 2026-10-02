@@ -21,6 +21,7 @@ public class TimerManager : MonoBehaviour
     private bool spokeThree;
     private bool spokeTwo;
     private bool spokeOne;
+    private int displayedSeconds = -1;
 
     public float CurrentTime => currentTime;
 
@@ -31,8 +32,8 @@ public class TimerManager : MonoBehaviour
             gameSfxManager = GetComponent<GameSfxManager>();
         }
 
-        timerText.color = new Color(0.83f, 0.69f, 0.22f);
-        timerText.transform.localScale = Vector3.one;
+        currentTime = InitialTime;
+        RefreshTimerUI();
     }
 
     public void StartTimer()
@@ -50,6 +51,7 @@ public class TimerManager : MonoBehaviour
         spokeThree = false;
         spokeTwo = false;
         spokeOne = false;
+        RefreshTimerUI();
     }
 
     public void StopTimer()
@@ -75,26 +77,18 @@ public class TimerManager : MonoBehaviour
             return;
         }
 
-        int minutes = Mathf.FloorToInt(currentTime / 60f);
-        int seconds = Mathf.FloorToInt(currentTime % 60f);
- 
-        timerText.text = $"{minutes:00}:{seconds:00}";
-
         float previousTime = currentTime;
         currentTime = Mathf.Max(0f, currentTime - Time.deltaTime);
+        RefreshTimerUI();
 
         if (!warnedAt30 && previousTime > 30f && currentTime <= 30f)
         {
-            timerText.color = new Color(1f, 0.65f, 0f);
             warnedAt30 = true;
             PlayWarning();
         }
 
         if (!warnedAt10 && previousTime > 10f && currentTime <= 10f)
         {
-            timerText.color = Color.red;
-            float scale = 1f + Mathf.Sin(Time.time * 8f) * 0.15f;
-            timerText.transform.localScale = Vector3.one * scale;
             warnedAt10 = true;
             PlayWarning();
         }
@@ -128,6 +122,25 @@ public class TimerManager : MonoBehaviour
         Debug.Log("[TIMER] Tiempo agotado");
         ttsManager.Speak("Se terminó el tiempo. Has perdido.");
         if (gameSfxManager != null) gameSfxManager.PlayDefeatAfterSpeech(ttsManager);
+    }
+
+    private void RefreshTimerUI()
+    {
+        if (timerText == null) return;
+        int remaining = Mathf.CeilToInt(currentTime);
+        if (remaining != displayedSeconds)
+        {
+            displayedSeconds = remaining;
+            timerText.text = $"<size=24><color=#D9B76F>TIEMPO RESTANTE</color></size>\n{remaining / 60:00}:{remaining % 60:00}";
+        }
+        timerText.color = currentTime <= 10f && timerActive
+            ? new Color(1f, 0.38f, 0.28f)
+            : currentTime <= 30f && timerActive
+                ? new Color(1f, 0.72f, 0.3f)
+                : new Color(1f, 0.91f, 0.72f);
+        float scale = timerActive && currentTime <= 10f
+            ? 1f + Mathf.Sin(Time.time * 6f) * 0.04f : 1f;
+        timerText.transform.localScale = Vector3.one * scale;
     }
 
     private void PlayWarning()

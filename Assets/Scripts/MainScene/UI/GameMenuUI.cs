@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 /// <summary>Connects the editable Main Scene panels to the game menu actions.</summary>
 public sealed class GameMenuUI : MonoBehaviour
 {
     [Header("Game logic")]
-    [SerializeField] private BachMenuController menu;
+    [SerializeField] private MenuController menu;
 
     [Header("Screens")]
     [SerializeField] private GameObject mainMenuPanel;
@@ -47,6 +48,7 @@ public sealed class GameMenuUI : MonoBehaviour
     [SerializeField] private Button pauseButton;
 
     private GameState shownState = (GameState)(-1);
+    private GameSfxManager sfxManager;
 
     private void Awake()
     {
@@ -86,7 +88,10 @@ public sealed class GameMenuUI : MonoBehaviour
 
     private void Start()
     {
-        if (enabled) ShowState(menu.GameManager.CurrentState);
+        if (!enabled) return;
+        sfxManager = menu.SfxManager;
+        if (sfxManager != null) sfxManager.VictoryCueFinished += ShowVictoryResult;
+        ShowState(menu.GameManager.CurrentState);
     }
 
     private void Update()
@@ -97,6 +102,7 @@ public sealed class GameMenuUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (sfxManager != null) sfxManager.VictoryCueFinished -= ShowVictoryResult;
         if (menu != null && menu.GameManager != null)
             menu.GameManager.StateChanged -= ShowState;
     }
@@ -107,7 +113,8 @@ public sealed class GameMenuUI : MonoBehaviour
         pausePanel.SetActive(state == GameState.Paused);
         volumePanel.SetActive(state == GameState.VolumeMenu
             || state == GameState.PausedVolumeMenu);
-        resultPanel.SetActive(state == GameState.Victory || state == GameState.GameOver);
+        resultPanel.SetActive(state == GameState.GameOver
+            || (state == GameState.Victory && sfxManager == null));
         hudPanel.SetActive(state == GameState.Playing);
 
         if (state == GameState.VolumeMenu || state == GameState.PausedVolumeMenu)
@@ -126,6 +133,24 @@ public sealed class GameMenuUI : MonoBehaviour
             resultImage.sprite = state == GameState.Victory 
                 ? victorySprite : gameOverSprite;     
         shownState = state;
+        if (EventSystem.current != null)
+        {
+            GameObject selected = state == GameState.MainMenu ? startButton.gameObject
+                : state == GameState.Paused ? continueButton.gameObject
+                : state == GameState.VolumeMenu || state == GameState.PausedVolumeMenu ? volumeSlider.gameObject
+                : state == GameState.GameOver ? resultReturnButton.gameObject : null;
+            EventSystem.current.SetSelectedGameObject(selected);
+        }
+    }
+
+    private void ShowVictoryResult()
+    {
+        if (menu.GameManager.CurrentState == GameState.Victory)
+        {
+            resultPanel.SetActive(true);
+            if (EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(resultReturnButton.gameObject);
+        }
     }
 
     private void ChangeVolume(int step)

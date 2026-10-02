@@ -11,7 +11,7 @@ public class VoiceCommandManager : MonoBehaviour
     [SerializeField] private VolumeManager volumeManager;
     [SerializeField] private QuestionManager questionManager;
     [SerializeField] private TimerManager timerManager;
-    [SerializeField] private BachMenuController menuController;
+    [SerializeField] private MenuController menuController;
 
 #if UNITY_EDITOR
     [ContextMenu("Probar: iniciar preguntas y música")]
@@ -84,10 +84,10 @@ public class VoiceCommandManager : MonoBehaviour
             return;
         }
 
-        if (menuController == null) menuController = GetComponent<BachMenuController>();
+        if (menuController == null) menuController = GetComponent<MenuController>();
         if (menuController == null)
         {
-            Debug.LogError("[VOICE] Asigná BachMenuController en el Inspector.", this);
+            Debug.LogError("[VOICE] Asigná MenuController en el Inspector.", this);
             enabled = false;
             return;
         }

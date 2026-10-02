@@ -13,6 +13,8 @@ public class GameSfxManager : MonoBehaviour
     private AudioClip victory;
     private Coroutine pendingFinalCue;
 
+    public event System.Action VictoryCueFinished;
+
     private void Awake()
     {
         source = gameObject.AddComponent<AudioSource>();
@@ -47,20 +49,20 @@ public class GameSfxManager : MonoBehaviour
 
     public void PlayVictoryAfterSpeech(TTSManager ttsManager)
     {
-        PlayAfterSpeech(ttsManager, victory);
+        PlayAfterSpeech(ttsManager, victory, true);
     }
 
-    private void PlayAfterSpeech(TTSManager ttsManager, AudioClip clip)
+    private void PlayAfterSpeech(TTSManager ttsManager, AudioClip clip, bool notifyVictory = false)
     {
         if (pendingFinalCue != null)
         {
             StopCoroutine(pendingFinalCue);
         }
 
-        pendingFinalCue = StartCoroutine(WaitForSpeechThenPlay(ttsManager, clip));
+        pendingFinalCue = StartCoroutine(WaitForSpeechThenPlay(ttsManager, clip, notifyVictory));
     }
 
-    private IEnumerator WaitForSpeechThenPlay(TTSManager ttsManager, AudioClip clip)
+    private IEnumerator WaitForSpeechThenPlay(TTSManager ttsManager, AudioClip clip, bool notifyVictory)
     {
         // TTSManager marks speech busy as soon as Speak queues it and releases it
         // only after the native voice has stayed quiet.
@@ -69,8 +71,22 @@ public class GameSfxManager : MonoBehaviour
             yield return null;
         }
 
+        if (notifyVictory)
+        {
+            CameraFollow victoryCamera = FindAnyObjectByType<CameraFollow>();
+            while (victoryCamera != null && victoryCamera.isActiveAndEnabled && victoryCamera.IsVictoryTransitioning)
+                yield return null;
+        }
+
         Play(clip);
+        // Wait for actual playback to finish, including when the volume is muted.
+        yield return null;
+        while (source.isPlaying)
+        {
+            yield return null;
+        }
         pendingFinalCue = null;
+        if (notifyVictory) VictoryCueFinished?.Invoke();
     }
 
     private AudioClip Load(string name)

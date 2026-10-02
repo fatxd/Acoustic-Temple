@@ -12,7 +12,7 @@ public sealed class MainSceneFlow : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private QuestionManager questionManager;
     [SerializeField] private TTSManager ttsManager;
-    [SerializeField] private BachMenuController menuController;
+    [SerializeField] private MenuController menuController;
 
     [SerializeField, Min(0f)]
     private float knockbackDistance = 0.8f;
@@ -443,7 +443,7 @@ public sealed class MainSceneFlow : MonoBehaviour
 
         // Esperar respuesta o TTS
         if (waitingForAnswer ||
-            ttsManager.IsSpeaking)
+            ttsManager.IsBlockingTraversal)
         {
             player.SetAutomaticInput(Vector2.zero);
             return;

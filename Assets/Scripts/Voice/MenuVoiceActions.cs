@@ -6,9 +6,9 @@ internal sealed class MenuVoiceActions
         "seis", "siete", "ocho", "nueve", "diez"
     };
 
-    private readonly BachMenuController menu;
+    private readonly MenuController menu;
 
-    public MenuVoiceActions(BachMenuController menu)
+    public MenuVoiceActions(MenuController menu)
     {
         this.menu = menu;
     }
